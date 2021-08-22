@@ -1,0 +1,48 @@
+package com.washingtoncodelab.diceroller
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
+import android.widget.Toast
+
+class MainActivity : AppCompatActivity() {
+  // var diceImage :ImageView?= null
+  lateinit var diceImage: ImageView
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        val rollVButton :Button = findViewById(R.id.roll_label)
+
+        diceImage = findViewById(R.id.dice_image)
+
+        rollVButton.setOnClickListener {
+            rollDice()
+        }
+
+    }
+    private fun rollDice(){
+        val randomInt = (1..6).random()
+        val rolledText :TextView = findViewById(R.id.result_text)
+        rolledText.text = getString(R.string.dice_rolled)
+        rolledText.text = randomInt.toString()
+        Toast.makeText(this,"button clicked",Toast.LENGTH_LONG).show()
+        val resetButton :Button = findViewById(R.id.reset)
+        resetButton.setOnClickListener {
+            rolledText.text = "0"
+            diceImage.setImageResource(R.drawable.empty_dice)
+        }
+        val drawable_resourse = when (randomInt){
+            1 -> R.drawable.dice_1
+            2 -> R.drawable.dice_2
+            3 -> R.drawable.dice_3
+            4 -> R.drawable.dice_4
+            5 -> R.drawable.dice_5
+            else -> R.drawable.dice_6
+        }
+        diceImage.setImageResource(drawable_resourse)
+    }
+}
